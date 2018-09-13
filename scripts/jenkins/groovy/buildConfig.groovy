@@ -12,11 +12,7 @@ class BuildConfig {
   private static final String DEFAULT_IMAGE_VERSION_TAG = '111'
   // This is the default image used for tests, build, etc.
   public static final String DEFAULT_IMAGE = DOCKER_REGISTRY + '/opsh2oai/' + DEFAULT_IMAGE_NAME + ':' + DEFAULT_IMAGE_VERSION_TAG
-
-  private static final String BENCHMARK_IMAGE_NAME = 'h2o-3-benchmark'
-  private static final String BENCHMARK_IMAGE_VERSION_TAG = 'latest'
-  // Use this image for benchmark stages
-  public static final String BENCHMARK_IMAGE = DOCKER_REGISTRY + '/opsh2oai/' + BENCHMARK_IMAGE_NAME + ':' + BENCHMARK_IMAGE_VERSION_TAG
+  public static final String AWSCLI_IMAGE = DOCKER_REGISTRY + '/awscli'
 
   private static final String HADOOP_IMAGE_NAME_PREFIX = 'h2o-3-hadoop'
   private static final String HADOOP_IMAGE_VERSION_TAG = '48'
@@ -53,7 +49,6 @@ class BuildConfig {
 
   private static final Map EXPECTED_IMAGE_VERSIONS= [
           (DEFAULT_IMAGE): 'docker.h2o.ai/opsh2oai/h2o-3-runtime@sha256:21a6e898ac8a5facf96fd54e53d0ccb9e13f887ba18deabd2504a962ad2a1a95',
-          (BENCHMARK_IMAGE): 'docker.h2o.ai/opsh2oai/h2o-3-benchmark@sha256:1edd212621bb8a9e6469c450a86c5136cecdc5d5371179a6e9b513b032dbc182',
 
           "docker.h2o.ai/opsh2oai/h2o-3-hadoop-hdp-2.2:48":     "docker.h2o.ai/opsh2oai/h2o-3-hadoop-hdp-2.2@sha256:9e7cd9f4a1a7cf3ee3e98105953c0e834ffa12df6eedcf9f8eee3a1b677bf2f8",
           "docker.h2o.ai/opsh2oai/h2o-3-hadoop-hdp-2.2-krb:48": "docker.h2o.ai/opsh2oai/h2o-3-hadoop-hdp-2.2-krb@sha256:907030f3afd48024d2bfea77804854f5954655e8cc97b9158c365f85814d63f4",
@@ -266,11 +261,7 @@ class BuildConfig {
   }
 
   String getExpectedImageVersion(final String image) {
-    final def version = EXPECTED_IMAGE_VERSIONS[image]
-    if (version == null) {
-      throw new IllegalArgumentException(String.format('Cannot find expected image version for %s', image))
-    }
-    return version
+    return EXPECTED_IMAGE_VERSIONS[image]
   }
 
   String getStashNameForTestPackage(final String platform) {
