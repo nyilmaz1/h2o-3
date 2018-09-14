@@ -93,7 +93,12 @@ public class SQLManager {
         rs.close();
       }
       //get H2O column names and types
-      rs = stmt.executeQuery(buildSelectSingleRowSql(databaseType, table, columns));
+      if (streaming) {
+        stmt.setMaxRows(1);
+        rs = stmt.executeQuery("SELECT " + columns + " FROM " + table);
+      } else {
+        rs = stmt.executeQuery(buildSelectSingleRowSql(databaseType, table, columns));
+      }
       ResultSetMetaData rsmd = rs.getMetaData();
       numCol = rsmd.getColumnCount();
 
